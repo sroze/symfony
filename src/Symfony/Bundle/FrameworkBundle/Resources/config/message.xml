@@ -12,12 +12,6 @@
             <argument type="collection" /> <!-- Middlewares -->
         </service>
 
-        <service id="message.middleware.debug.logging" class="Symfony\Component\Message\Debug\LoggingMiddleware">
-            <argument type="service" id="logger" />
-
-            <tag name="message_middleware" priority="10" />
-        </service>
-
         <!-- Handlers -->
         <service id="message.handler_resolver" class="Symfony\Component\Message\HandlerLocator">
             <argument type="collection" /> <!-- Message to handler mapping -->
@@ -46,5 +40,13 @@
 
         <service id="message.transport.default_encoder" alias="message.transport.serialize_message_with_type_in_headers" public="true" />
         <service id="message.transport.default_decoder" alias="message.transport.serialize_message_with_type_in_headers" public="true" />
+
+        <!-- Debug -->
+        <service id="message.middleware.debug.logging" class="Symfony\Component\Message\Debug\LoggingMiddleware">
+            <argument type="service" id="logger" />
+
+            <tag name="message_middleware" priority="10" />
+            <tag name="monolog.logger" channel="message" />
+        </service>
     </services>
 </container>
