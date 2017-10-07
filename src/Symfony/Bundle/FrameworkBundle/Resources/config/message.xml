@@ -48,5 +48,7 @@
             <tag name="message_middleware" priority="10" />
             <tag name="monolog.logger" channel="message" />
         </service>
+
+
     </services>
 </container>
