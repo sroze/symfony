@@ -920,11 +920,11 @@ class Configuration implements ConfigurationInterface
                                 ->beforeNormalization()
                                     ->ifString()
                                     ->then(function ($v) {
-                                        return array('producers' => array($v));
+                                        return array('senders' => array($v));
                                     })
                                 ->end()
                                 ->children()
-                                    ->arrayNode('producers')
+                                    ->arrayNode('senders')
                                         ->requiresAtLeastOneElement()
                                         ->prototype('scalar')->end()
                                     ->end()
