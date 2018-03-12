@@ -29,7 +29,7 @@ class ChainHandler
     public function __construct(array $handlers)
     {
         if (empty($handlers)) {
-            throw new \InvalidArgumentException('A collection of message handlers requires at least one handler');
+            throw new \InvalidArgumentException('A collection of message handlers requires at least one handler.');
         }
 
         $this->handlers = $handlers;

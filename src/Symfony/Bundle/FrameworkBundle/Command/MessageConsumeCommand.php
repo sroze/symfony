@@ -38,12 +38,11 @@ class MessageConsumeCommand extends Command
                 new InputArgument('receiver', InputArgument::REQUIRED, 'Name of the receiver'),
                 new InputOption('bus', 'b', InputOption::VALUE_REQUIRED, 'Name of the bus to dispatch the messages to', 'message_bus'),
             ))
-            ->setDescription('Consume a message')
+            ->setDescription('Consumes a message')
             ->setHelp(<<<'EOF'
-The <info>%command.name%</info> command consume a message and dispatch it to the message bus.
+The <info>%command.name%</info> command consumes a message and dispatches it to the message bus.
 
-    %command.full_name% <consumer-service-name>
-
+    <info>php %command.full_name% <consumer-service-name></info>
 EOF
             )
         ;
@@ -58,15 +57,15 @@ EOF
         $container = $this->getApplication()->getKernel()->getContainer();
 
         if (!$container->has($receiverName = $input->getArgument('receiver'))) {
-            throw new \RuntimeException(sprintf('Receiver "%s" does not exist', $receiverName));
+            throw new \RuntimeException(sprintf('Receiver "%s" does not exist.', $receiverName));
         } elseif (!($receiver = $container->get($receiverName)) instanceof ReceiverInterface) {
-            throw new \RuntimeException(sprintf('Receiver "%s" is not a valid message consumer. It must implement the interface "%s"', $receiverName, ReceiverInterface::class));
+            throw new \RuntimeException(sprintf('Receiver "%s" is not a valid message consumer. It must implement the "%s" interface.', $receiverName, ReceiverInterface::class));
         }
 
         if (!$container->has($busName = $input->getOption('bus'))) {
-            throw new \RuntimeException(sprintf('Bus "%s" does not exist', $busName));
+            throw new \RuntimeException(sprintf('Bus "%s" does not exist.', $busName));
         } elseif (!($messageBus = $container->get($busName)) instanceof MessageBusInterface) {
-            throw new \RuntimeException(sprintf('Bus "%s" is not a valid message bus. It must implement the interface "%s"', $busName, MessageBusInterface::class));
+            throw new \RuntimeException(sprintf('Bus "%s" is not a valid message bus. It must implement the "%s" interface.', $busName, MessageBusInterface::class));
         }
 
         $worker = new Worker($receiver, $messageBus);

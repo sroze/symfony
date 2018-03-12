@@ -17,7 +17,9 @@ namespace Symfony\Component\Message\Transport\Serialization;
 interface DecoderInterface
 {
     /**
-     * Decode the message from an encoded-form. The `$encodedMessage` parameter is a key-value array that
+     * Decodes the message from an encoded-form.
+     *
+     * The `$encodedMessage` parameter is a key-value array that
      * describes the message, that will be used by the different adapters.
      *
      * The most common keys are:

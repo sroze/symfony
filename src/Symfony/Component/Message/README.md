@@ -162,7 +162,7 @@ class ImportantActionToEmailSender implements SenderInterface
     public function send($message)
     {
         if (!$message instanceof ImportantAction) {
-            throw new \InvalidArgumentException(sprintf('Producer only supports "%s" messages', ImportantAction::class));
+            throw new \InvalidArgumentException(sprintf('Producer only supports "%s" messages.', ImportantAction::class));
         }
         
         $this->mailer->send(

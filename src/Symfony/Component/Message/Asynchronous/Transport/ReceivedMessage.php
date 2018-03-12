@@ -11,11 +11,13 @@
 
 namespace Symfony\Component\Message\Asynchronous\Transport;
 
+use Symfony\Component\Message\Asynchronous\Middleware\SendMessageMiddleware;
+
 /**
  * Wraps a received message. This is mainly used by the `SendMessageMiddleware` middleware to identify
  * a message should not be sent if it was just received.
  *
- * @see \Symfony\Component\Message\Asynchronous\Middleware\SendMessageMiddleware
+ * @see SendMessageMiddleware
  *
  * @author Samuel Roze <samuel.roze@gmail.com>
  */

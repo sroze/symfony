@@ -20,9 +20,6 @@ use Symfony\Component\Message\Exception\NoHandlerForMessageException;
  */
 class ContainerHandlerLocator implements HandlerLocatorInterface
 {
-    /**
-     * @var ContainerInterface
-     */
     private $container;
 
     public function __construct(ContainerInterface $container)
@@ -35,7 +32,7 @@ class ContainerHandlerLocator implements HandlerLocatorInterface
         $messageKey = get_class($message);
 
         if (!$this->container->has($messageKey)) {
-            throw new NoHandlerForMessageException(sprintf('No handler for message "%s"', $messageKey));
+            throw new NoHandlerForMessageException(sprintf('No handler for message "%s".', $messageKey));
         }
 
         return $this->container->get($messageKey);
