@@ -33,7 +33,7 @@ class Serializer implements DecoderInterface, EncoderInterface
     public function decode(array $encodedMessage)
     {
         if (empty($encodedMessage['body']) || empty($encodedMessage['headers'])) {
-            throw new \InvalidArgumentException('Encoded message should have at least a `body` some `headers`.');
+            throw new \InvalidArgumentException('Encoded message should have at least a `body` and some `headers`.');
         } elseif (empty($encodedMessage['headers']['type'])) {
             throw new \InvalidArgumentException('Encoded message does not have a `type` header.');
         }
@@ -48,9 +48,7 @@ class Serializer implements DecoderInterface, EncoderInterface
     {
         return array(
             'body' => $this->serializer->serialize($message, $this->format),
-            'headers' => array(
-                'type' => get_class($message),
-            ),
+            'headers' => array('type' => get_class($message)),
         );
     }
 }

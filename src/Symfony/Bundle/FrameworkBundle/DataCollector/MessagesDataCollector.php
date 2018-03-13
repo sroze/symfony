@@ -56,6 +56,7 @@ class MessagesDataCollector extends DataCollector implements MiddlewareInterface
             ),
         );
 
+        $exception = null;
         try {
             $result = $next($message);
 
@@ -78,7 +79,7 @@ class MessagesDataCollector extends DataCollector implements MiddlewareInterface
 
         $this->data[] = $debugRepresentation;
 
-        if (isset($exception)) {
+        if (null !== $exception) {
             throw $exception;
         }
 

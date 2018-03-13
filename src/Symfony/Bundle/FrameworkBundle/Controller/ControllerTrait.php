@@ -390,7 +390,7 @@ trait ControllerTrait
      *
      * @return mixed The result from the bus
      *
-     * @final since version 4.1
+     * @final
      */
     protected function dispatch($message)
     {

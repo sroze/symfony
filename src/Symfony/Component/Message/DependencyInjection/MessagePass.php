@@ -95,7 +95,8 @@ class MessagePass implements CompilerPassInterface
 
     private function guessHandledClass(ContainerBuilder $container, string $serviceId): string
     {
-        $reflection = new \ReflectionClass($container->getDefinition($serviceId)->getClass());
+        $reflection = $container->getReflectionClass($container->getDefinition($serviceId)->getClass());
+
         try {
             $method = $reflection->getMethod('__invoke');
         } catch (\ReflectionException $e) {

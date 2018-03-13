@@ -26,8 +26,6 @@ interface DecoderInterface
      * - `body` (string) - the message body
      * - `headers` (string<string>) - a key/value pair of headers
      *
-     * @param array $encodedMessage
-     *
      * @return object
      */
     public function decode(array $encodedMessage);

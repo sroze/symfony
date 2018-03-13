@@ -17,7 +17,7 @@ namespace Symfony\Component\Message;
 interface MessageBusInterface
 {
     /**
-     * Dispatch the given message.
+     * Dispatches the given message.
      *
      * The bus can return a value coming from handlers, but is not required to do so.
      *

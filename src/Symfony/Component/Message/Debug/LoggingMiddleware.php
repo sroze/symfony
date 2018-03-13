@@ -19,9 +19,6 @@ use Psr\Log\LoggerInterface;
  */
 class LoggingMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var LoggerInterface
-     */
     private $logger;
 
     public function __construct(LoggerInterface $logger)

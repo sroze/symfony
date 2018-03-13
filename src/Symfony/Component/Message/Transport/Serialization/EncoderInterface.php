@@ -25,8 +25,6 @@ interface EncoderInterface
      * - `headers` (string<string>) - a key/value pair of headers
      *
      * @param object $message The object that is put on the MessageBus by the user
-     *
-     * @return array
      */
     public function encode($message): array;
 }

@@ -17,7 +17,7 @@ namespace Symfony\Component\Message\Transport;
 interface SenderInterface
 {
     /**
-     * Send the given message.
+     * Sends the given message.
      *
      * @param object $message
      */
