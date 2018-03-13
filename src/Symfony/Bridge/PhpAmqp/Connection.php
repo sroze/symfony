@@ -77,7 +77,7 @@ class Connection
     public function publish(string $body, array $headers = [])
     {
         if ($this->debug) {
-            $this->queue();
+            $this->setup();
         }
 
         $this->exchange()->publish($body, null, AMQP_NOPARAM, [
@@ -92,12 +92,28 @@ class Connection
      */
     public function waitAndGet() : ?\AMQPEnvelope
     {
-        $message = null;
-        $this->queue()->consume(function (\AMQPEnvelope $envelope) use (&$message) {
-            $message = $envelope;
+        if ($this->debug) {
+            $this->setup();
+        }
 
-            return false;
-        });
+        $message = null;
+
+        try {
+            $this->queue()->consume(function (\AMQPEnvelope $envelope) use (&$message) {
+                $message = $envelope;
+
+                return false;
+            });
+        } catch (\AMQPQueueException $e) {
+            if ($e->getCode() == 404) {
+                // If we get a 404 for the queue, it means we need to setup the exchange & queue.
+                $this->setup();
+
+                return $this->waitAndGet();
+            }
+
+            throw $e;
+        }
 
         return $message;
     }
@@ -123,8 +139,6 @@ class Connection
             $this->amqpQueue = new \AMQPQueue($this->channel());
             $this->amqpQueue->setName($this->queueName);
             $this->amqpQueue->setFlags(AMQP_DURABLE);
-            $this->amqpQueue->declareQueue();
-            $this->amqpQueue->bind($this->exchange()->getName());
         }
 
         return $this->amqpQueue;
@@ -137,7 +151,6 @@ class Connection
             $this->amqpExchange->setName($this->exchangeName);
             $this->amqpExchange->setType(AMQP_EX_TYPE_FANOUT);
             $this->amqpExchange->setFlags(AMQP_DURABLE);
-            $this->amqpExchange->declareExchange();
         }
 
         return $this->amqpExchange;
@@ -156,5 +169,24 @@ class Connection
     public function nack(\AMQPEnvelope $message)
     {
         return $this->queue()->nack($message->getDeliveryTag());
+    }
+
+    public function setup()
+    {
+        if (!$this->channel()->isConnected()) {
+            $this->clear();
+        }
+
+        $this->exchange()->declareExchange();
+
+        $this->queue()->declareQueue();
+        $this->queue()->bind($this->exchange()->getName());
+    }
+
+    private function clear()
+    {
+        $this->amqpChannel = null;
+        $this->amqpQueue = null;
+        $this->amqpExchange = null;
     }
 }
