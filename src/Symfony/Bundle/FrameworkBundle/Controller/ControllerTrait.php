@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Message\MessageBusInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -381,5 +382,21 @@ trait ControllerTrait
         }
 
         return $this->container->get('security.csrf.token_manager')->isTokenValid(new CsrfToken($id, $token));
+    }
+
+    /**
+     * Dispatches a message to the bus.
+     *
+     * @param object $message The message to dispatch
+     *
+     * @return mixed The result from the bus
+     */
+    final protected function dispatch($message)
+    {
+        if (!$this->container->has('message_bus')) {
+            throw new \LogicException('The message bus is not enabled in your application. Enable it with the "message" key in "config/packages/framework.yaml".');
+        }
+
+        return $this->container->get('message_bus')->dispatch($message);
     }
 }
