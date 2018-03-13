@@ -39,11 +39,11 @@ class PhpAmqpExtension extends Extension
             'message.amqp.receiver' => (new Definition(AmqpReceiver::class, [
                 new Reference($config['decoder']),
                 new Reference('message.amqp.connection')
-            ]))->addTag('message.receiver')->setPublic(true),
+            ]))->addTag('message.receiver'),
             'message.amqp.sender' => (new Definition(AmqpSender::class, [
                 new Reference($config['encoder']),
                 new Reference('message.amqp.connection')
-            ]))->addTag('message.sender')->setPublic(true)
+            ]))->addTag('message.sender')
         ]);
     }
 }
