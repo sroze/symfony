@@ -17,17 +17,19 @@ namespace Symfony\Component\Message;
  */
 class MessageBus implements MessageBusInterface
 {
-    /**
-     * @var MiddlewareInterface[]
-     */
     private $middlewares;
+
+    /**
+     * @var MiddlewareInterface[]|null
+     */
+    private $indexedMiddlewares;
 
     /**
      * @param MiddlewareInterface[]|iterable $middlewares
      */
     public function __construct(iterable $middlewares = array())
     {
-        $this->middlewares = is_array($middlewares) ? array_values($middlewares) : iterator_to_array($middlewares, false);
+        $this->middlewares = $middlewares;
     }
 
     /**
@@ -40,11 +42,15 @@ class MessageBus implements MessageBusInterface
 
     private function callableForNextMiddleware(int $index): callable
     {
-        if (!isset($this->middlewares[$index])) {
+        if (null === $this->indexedMiddlewares) {
+            $this->indexedMiddlewares = is_array($this->middlewares) ? array_values($this->middlewares) : iterator_to_array($this->middlewares, false);
+        }
+
+        if (!isset($this->indexedMiddlewares[$index])) {
             return function () {};
         }
 
-        $middleware = $this->middlewares[$index];
+        $middleware = $this->indexedMiddlewares[$index];
 
         return function ($message) use ($middleware, $index) {
             return $middleware->handle($message, $this->callableForNextMiddleware($index + 1));
