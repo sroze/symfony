@@ -55,5 +55,11 @@
             <tag name="data_collector" template="@WebProfiler/Collector/messages.html.twig" id="messages" priority="100" />
             <tag name="message_middleware" />
         </service>
+
+        <!-- Discovery -->
+        <service id="message.receiver_locator">
+            <tag name="container.service_locator" />
+            <argument type="collection" />
+        </service>
     </services>
 </container>

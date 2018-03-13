@@ -70,6 +70,9 @@
         </service>
 
         <service id="console.command.message_consume" class="Symfony\Bundle\FrameworkBundle\Command\MessageConsumeCommand">
+            <argument type="service" id="message_bus" />
+            <argument type="service" id="message.receiver_locator" />
+
             <tag name="console.command" command="message:consume" />
         </service>
 

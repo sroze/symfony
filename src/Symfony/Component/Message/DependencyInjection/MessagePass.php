@@ -47,6 +47,7 @@ class MessagePass implements CompilerPassInterface
             return;
         }
 
+        $this->registerReceivers($container);
         $this->registerHandlers($container);
     }
 
@@ -112,5 +113,17 @@ class MessagePass implements CompilerPassInterface
         }
 
         return $parameter->getClass()->getName();
+    }
+
+    private function registerReceivers(ContainerBuilder $container)
+    {
+        $receiverMapping = [];
+        foreach ($container->findTaggedServiceIds('message.receiver') as $id => $tags) {
+            foreach ($tags as $tag) {
+                $receiverMapping[$tag['id'] ?? $id] = new Reference($id);
+            }
+        }
+
+        $container->getDefinition('message.receiver_locator')->replaceArgument(0, $receiverMapping);
     }
 }

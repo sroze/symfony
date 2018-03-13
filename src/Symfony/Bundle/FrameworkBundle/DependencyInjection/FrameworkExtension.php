@@ -59,6 +59,8 @@ use Symfony\Component\Lock\Lock;
 use Symfony\Component\Lock\LockInterface;
 use Symfony\Component\Lock\Store\StoreFactory;
 use Symfony\Component\Lock\StoreInterface;
+use Symfony\Component\Message\Transport\ReceiverInterface;
+use Symfony\Component\Message\Transport\SenderInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\PropertyInfo\PropertyAccessExtractorInterface;
 use Symfony\Component\PropertyInfo\PropertyDescriptionExtractorInterface;
@@ -268,6 +270,8 @@ class FrameworkExtension extends Extension
 
         if ($this->isConfigEnabled($container, $config['message'])) {
             $this->registerMessageConfiguration($config['message'], $container, $loader);
+        } else {
+            $container->removeDefinition('console.command.message_consume');
         }
 
         if ($this->isConfigEnabled($container, $config['web_link'])) {
@@ -337,6 +341,10 @@ class FrameworkExtension extends Extension
             ->addTag('validator.constraint_validator');
         $container->registerForAutoconfiguration(ObjectInitializerInterface::class)
             ->addTag('validator.initializer');
+        $container->registerForAutoconfiguration(ReceiverInterface::class)
+            ->addTag('message.receiver');
+        $container->registerForAutoconfiguration(SenderInterface::class)
+            ->addTag('message.sender');
 
         if (!$container->getParameter('kernel.debug')) {
             // remove tagged iterator argument for resource checkers
