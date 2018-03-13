@@ -24,12 +24,17 @@ class MaximumCountReceiver implements ReceiverInterface
         $this->maximumNumberOfMessages = $maximumNumberOfMessages;
     }
 
-    public function receive(): iterable
+    public function receive(): \Generator
     {
+        $generator = $this->decoratedReceiver->receive();
         $receivedMessages = 0;
 
-        foreach ($this->decoratedReceiver->receive() as $message) {
-            yield $message;
+        foreach ($generator as $message) {
+            try {
+                yield $message;
+            } catch (\Throwable $e) {
+                $generator->throw($e);
+            }
 
             if (++$receivedMessages > $this->maximumNumberOfMessages) {
                 break;

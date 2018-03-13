@@ -33,12 +33,19 @@ class Worker
      */
     public function run()
     {
-        foreach ($this->receiver->receive() as $message) {
+        $messageGenerator = $this->receiver->receive();
+
+        foreach ($messageGenerator as $message) {
             if (!$message instanceof ReceivedMessage) {
                 $message = new ReceivedMessage($message);
             }
 
-            $this->bus->dispatch($message);
+            try {
+                $this->bus->dispatch($message);
+            } catch (\Throwable $e) {
+                // Return the exception to the message generator so it can properly handle it if needed.
+                $messageGenerator->throw($e);
+            }
         }
     }
 }
