@@ -58,13 +58,17 @@ EOF
 
         if (!$container->has($receiverName = $input->getArgument('receiver'))) {
             throw new \RuntimeException(sprintf('Receiver "%s" does not exist.', $receiverName));
-        } elseif (!($receiver = $container->get($receiverName)) instanceof ReceiverInterface) {
+        }
+
+        if (!($receiver = $container->get($receiverName)) instanceof ReceiverInterface) {
             throw new \RuntimeException(sprintf('Receiver "%s" is not a valid message consumer. It must implement the "%s" interface.', $receiverName, ReceiverInterface::class));
         }
 
         if (!$container->has($busName = $input->getOption('bus'))) {
             throw new \RuntimeException(sprintf('Bus "%s" does not exist.', $busName));
-        } elseif (!($messageBus = $container->get($busName)) instanceof MessageBusInterface) {
+        }
+
+        if (!($messageBus = $container->get($busName)) instanceof MessageBusInterface) {
             throw new \RuntimeException(sprintf('Bus "%s" is not a valid message bus. It must implement the "%s" interface.', $busName, MessageBusInterface::class));
         }
 
