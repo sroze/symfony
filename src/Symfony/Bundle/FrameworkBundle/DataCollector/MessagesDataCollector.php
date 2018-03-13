@@ -85,10 +85,7 @@ class MessagesDataCollector extends DataCollector implements MiddlewareInterface
         return $result;
     }
 
-    /**
-     * @return array
-     */
-    public function getMessages()
+    public function getMessages() : array
     {
         return $this->data;
     }

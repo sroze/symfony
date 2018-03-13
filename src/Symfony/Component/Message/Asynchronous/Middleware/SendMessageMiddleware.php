@@ -33,8 +33,10 @@ class SendMessageMiddleware implements MiddlewareInterface
     public function handle($message, callable $next)
     {
         if ($message instanceof ReceivedMessage) {
-            $message = $message->getMessage();
-        } elseif (!empty($senders = $this->senderLocator->getSendersForMessage($message))) {
+            return $next($message->getMessage());
+        }
+
+        if (!empty($senders = $this->senderLocator->getSendersForMessage($message))) {
             foreach ($senders as $sender) {
                 $sender->send($message);
             }

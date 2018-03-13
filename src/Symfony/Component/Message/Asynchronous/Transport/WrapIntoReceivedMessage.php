@@ -18,9 +18,6 @@ use Symfony\Component\Message\Transport\ReceiverInterface;
  */
 class WrapIntoReceivedMessage implements ReceiverInterface
 {
-    /**
-     * @var ReceiverInterface
-     */
     private $decoratedReceiver;
 
     public function __construct(ReceiverInterface $decoratedConsumer)

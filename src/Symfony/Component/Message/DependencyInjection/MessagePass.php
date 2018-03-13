@@ -56,13 +56,15 @@ class MessagePass implements CompilerPassInterface
 
         foreach ($container->findTaggedServiceIds($this->handlerTag, true) as $serviceId => $tags) {
             foreach ($tags as $tag) {
-                $handles = isset($tag['handles']) ? $tag['handles'] : $this->guessHandledClass($container, $serviceId);
+                $handles = $tag['handles'] ?? $this->guessHandledClass($container, $serviceId);
 
                 if (!class_exists($handles)) {
-                    throw new RuntimeException(sprintf('The message class "%s" declared in `__invoke` function of service "%s" does not exist.', $handles, $serviceId));
+                    $messageClassLocation = isset($tag['handles']) ? 'declared in your tag attribute "handles"' : 'declared in `__invoke` function';
+
+                    throw new RuntimeException(sprintf('The message class "%s" %s of service "%s" does not exist.', $messageClassLocation, $handles, $serviceId));
                 }
 
-                $priority = isset($tag['priority']) ? $tag['priority'] : 0;
+                $priority = $tag['priority'] ?? 0;
                 $handlersByMessage[$handles][$priority][] = new Reference($serviceId);
             }
         }

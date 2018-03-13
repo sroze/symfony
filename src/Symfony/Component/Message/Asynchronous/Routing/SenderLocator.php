@@ -18,8 +18,6 @@ class SenderLocator implements SenderLocatorInterface
 {
     /**
      * Mapping describing which sender should be used for which message.
-     *
-     * @var array
      */
     private $messageToSenderMapping;
 
