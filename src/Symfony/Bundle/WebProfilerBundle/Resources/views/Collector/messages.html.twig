@@ -52,13 +52,8 @@
     {% set color_code = 'normal' %}
     {% set message_count = 0 %}
     {% set icon %}
-        {% if profiler_markup_version == 1 %}
-            {{ include('@WebProfiler/Icon/messages.svg', { height: 28, color: '#3F3F3F' }) }}
-            <span class="sf-toolbar-status sf-toolbar-status-{{ color_code }}">{{ message_count }}</span>
-        {% else %}
-            {{ include('@WebProfiler/Icon/messages.svg') }}
-            <span class="sf-toolbar-value">{{ message_count }}</span>
-        {% endif %}
+        {{ include('@WebProfiler/Icon/messages.svg') }}
+        <span class="sf-toolbar-value">{{ message_count }}</span>
     {% endset %}
 
     {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: 'messages', status: color_code }) }}
