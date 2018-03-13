@@ -1384,7 +1384,7 @@ class FrameworkExtension extends Extension
 
         $messageToSenderMapping = array();
         foreach ($config['routing'] as $message => $messageConfiguration) {
-            $messageToSenderMapping[$message] = array_map(function (string $service) {
+            $messageToSenderMapping[$message] = array_map(function (?string $service) {
                 if (is_string($service)) {
                     return new Reference($service);
                 }
