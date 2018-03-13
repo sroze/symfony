@@ -21,8 +21,6 @@ class HandlerLocator implements HandlerLocatorInterface
 {
     /**
      * Maps a message (its class) to a given handler.
-     *
-     * @var array
      */
     private $messageToHandlerMapping;
 
@@ -39,18 +37,6 @@ class HandlerLocator implements HandlerLocatorInterface
             throw new NoHandlerForMessageException(sprintf('No handler for message "%s".', $messageKey));
         }
 
-        $handler = $this->messageToHandlerMapping[$messageKey];
-        if ($this->isCollectionOfHandlers($handler)) {
-            $handler = new ChainHandler($handler);
-        }
-
-        return $handler;
-    }
-
-    private function isCollectionOfHandlers($handler): bool
-    {
-        return is_array($handler) && array_reduce($handler, function (bool $allHandlers, $handler) {
-            return $allHandlers && is_callable($handler);
-        }, true);
+        return $this->messageToHandlerMapping[$messageKey];
     }
 }
