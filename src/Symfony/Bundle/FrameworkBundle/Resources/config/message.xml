@@ -27,7 +27,8 @@
 
         <!-- Asynchronous -->
         <service id="message.asynchronous.routing.sender_locator" class="Symfony\Component\Message\Asynchronous\Routing\SenderLocator">
-            <argument type="collection" /> <!-- Message to sender mapping -->
+            <argument type="service" id="message.sender_locator" />
+            <argument /> <!-- Message to sender ID mapping -->
         </service>
         <service id="message.asynchronous.middleware.send_message_to_producer" class="Symfony\Component\Message\Asynchronous\Middleware\SendMessageMiddleware">
             <argument type="service" id="message.asynchronous.routing.sender_locator" />
@@ -58,6 +59,10 @@
 
         <!-- Discovery -->
         <service id="message.receiver_locator">
+            <tag name="container.service_locator" />
+            <argument type="collection" />
+        </service>
+        <service id="message.sender_locator">
             <tag name="container.service_locator" />
             <argument type="collection" />
         </service>

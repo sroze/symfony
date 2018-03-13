@@ -11,19 +11,20 @@
 
 namespace Symfony\Component\Message\Asynchronous\Routing;
 
+use Psr\Container\ContainerInterface;
+
 /**
  * @author Samuel Roze <samuel.roze@gmail.com>
  */
 class SenderLocator implements SenderLocatorInterface
 {
-    /**
-     * Mapping describing which sender should be used for which message.
-     */
-    private $messageToSenderMapping;
+    private $senderServiceLocator;
+    private $messageToSenderIdsMapping;
 
-    public function __construct(array $messageToSenderMapping)
+    public function __construct(ContainerInterface $senderServiceLocator, array $messageToSenderIdsMapping)
     {
-        $this->messageToSenderMapping = $messageToSenderMapping;
+        $this->senderServiceLocator = $senderServiceLocator;
+        $this->messageToSenderIdsMapping = $messageToSenderIdsMapping;
     }
 
     /**
@@ -31,6 +32,13 @@ class SenderLocator implements SenderLocatorInterface
      */
     public function getSendersForMessage($message): array
     {
-        return $this->messageToSenderMapping[get_class($message)] ?? $this->messageToSenderMapping['*'] ?? array();
+        $senderIds = $this->messageToSenderIdsMapping[get_class($message)] ?? $this->messageToSenderIdsMapping['*'] ?? array();
+
+        $senders = array();
+        foreach ($senderIds as $senderId) {
+            $senders[] = $this->senderServiceLocator->get($senderId);
+        }
+
+        return $senders;
     }
 }

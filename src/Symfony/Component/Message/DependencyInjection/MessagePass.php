@@ -117,7 +117,7 @@ class MessagePass implements CompilerPassInterface
 
     private function registerReceivers(ContainerBuilder $container)
     {
-        $receiverMapping = [];
+        $receiverMapping = array();
         foreach ($container->findTaggedServiceIds('message.receiver') as $id => $tags) {
             foreach ($tags as $tag) {
                 $receiverMapping[$tag['id'] ?? $id] = new Reference($id);

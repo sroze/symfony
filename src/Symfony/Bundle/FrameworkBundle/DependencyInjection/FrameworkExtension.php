@@ -42,7 +42,6 @@ use Symfony\Component\DependencyInjection\Parameter;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
@@ -1390,18 +1389,20 @@ class FrameworkExtension extends Extension
     {
         $loader->load('message.xml');
 
-        $messageToSenderMapping = array();
+        $senderLocatorMapping = array();
+        $messageToSenderIdsMapping = array();
         foreach ($config['routing'] as $message => $messageConfiguration) {
-            $messageToSenderMapping[$message] = array_map(function (?string $service) {
-                if (is_string($service)) {
-                    return new Reference($service);
+            foreach ($messageConfiguration['senders'] as $sender) {
+                if (null !== $sender) {
+                    $senderLocatorMapping[$sender] = new Reference($sender);
                 }
+            }
 
-                return $service;
-            }, $messageConfiguration['senders']);
+            $messageToSenderIdsMapping[$message] = $messageConfiguration['senders'];
         }
 
-        $container->getDefinition('message.asynchronous.routing.sender_locator')->setArgument(0, $messageToSenderMapping);
+        $container->getDefinition('message.sender_locator')->replaceArgument(0, $senderLocatorMapping);
+        $container->getDefinition('message.asynchronous.routing.sender_locator')->replaceArgument(1, $messageToSenderIdsMapping);
     }
 
     private function registerCacheConfiguration(array $config, ContainerBuilder $container)
