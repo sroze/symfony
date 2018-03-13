@@ -389,8 +389,10 @@ trait ControllerTrait
      * @param object $message The message to dispatch
      *
      * @return mixed The result from the bus
+     *
+     * @final since version 4.1
      */
-    final protected function dispatch($message)
+    protected function dispatch($message)
     {
         if (!$this->container->has('message_bus')) {
             throw new \LogicException('The message bus is not enabled in your application. Enable it with the "message" key in "config/packages/framework.yaml".');
