@@ -19,9 +19,6 @@ use Symfony\Component\Message\HandlerLocatorInterface;
  */
 class HandleMessageMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var HandlerLocatorInterface
-     */
     private $messageHandlerResolver;
 
     public function __construct(HandlerLocatorInterface $messageHandlerResolver)

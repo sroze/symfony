@@ -12,7 +12,6 @@
 namespace Symfony\Component\Message;
 
 use Symfony\Component\Message\Exception\NoHandlerForMessageException;
-use Symfony\Component\Message\Handler\ChainHandler;
 
 /**
  * @author Samuel Roze <samuel.roze@gmail.com>

@@ -24,7 +24,7 @@ interface EncoderInterface
      * - `body` (string) - the message body
      * - `headers` (string<string>) - a key/value pair of headers
      *
-     * @param object $message
+     * @param object $message The object that is put on the MessageBus by the user
      *
      * @return array
      */

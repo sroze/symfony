@@ -16,16 +16,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 /**
  * @author Samuel Roze <samuel.roze@gmail.com>
  */
-class SymfonySerialization implements DecoderInterface, EncoderInterface
+class Serializer implements DecoderInterface, EncoderInterface
 {
-    /**
-     * @var SerializerInterface
-     */
     private $serializer;
-
-    /**
-     * @var string
-     */
     private $format;
 
     public function __construct(SerializerInterface $serializer, string $format = 'json')
