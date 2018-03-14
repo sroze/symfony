@@ -125,7 +125,7 @@ Note that you can also route a message to multiple senders at the same time:
 framework:
     message:
         routing:
-            'My\Message\AnImportantMessage': [my_default_sender, my_audit_semder]
+            'My\Message\AnImportantMessage': [my_default_sender, my_audit_sender]
 ```
 
 #### Same bus received and sender
