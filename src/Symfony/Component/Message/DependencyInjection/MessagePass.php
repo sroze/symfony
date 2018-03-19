@@ -47,6 +47,10 @@ class MessagePass implements CompilerPassInterface
             return;
         }
 
+        if (!$container->getParameter('kernel.debug') || !$container->hasDefinition('logger')) {
+            $container->removeDefinition('message.middleware.debug.logging');
+        }
+
         $this->registerReceivers($container);
         $this->registerHandlers($container);
     }
