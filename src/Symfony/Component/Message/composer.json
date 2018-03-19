@@ -22,7 +22,7 @@
         "symfony/serializer": "~3.4|~4.0"
     },
     "suggest": {
-        "sroze/enqueue-bridge": "For using the php-enqueue library as an adapater."
+        "sroze/enqueue-bridge": "For using the php-enqueue library as an adapter."
     },
     "autoload": {
         "psr-4": { "Symfony\\Component\\Message\\": "" },
