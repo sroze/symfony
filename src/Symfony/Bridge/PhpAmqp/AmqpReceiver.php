@@ -12,8 +12,8 @@
 namespace Symfony\Bridge\PhpAmqp;
 
 use Symfony\Bridge\PhpAmqp\Exception\RejectMessageException;
-use Symfony\Component\Message\Transport\ReceiverInterface;
-use Symfony\Component\Message\Transport\Serialization\DecoderInterface;
+use Symfony\Component\Messenger\Transport\ReceiverInterface;
+use Symfony\Component\Messenger\Transport\Serialization\DecoderInterface;
 
 /**
  * Symfony Message receiver to get messages from AMQP brokers using PHP's AMQP extension.

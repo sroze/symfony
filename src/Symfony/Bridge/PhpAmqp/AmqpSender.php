@@ -11,8 +11,8 @@
 
 namespace Symfony\Bridge\PhpAmqp;
 
-use Symfony\Component\Message\Transport\SenderInterface;
-use Symfony\Component\Message\Transport\Serialization\EncoderInterface;
+use Symfony\Component\Messenger\Transport\SenderInterface;
+use Symfony\Component\Messenger\Transport\Serialization\EncoderInterface;
 
 /**
  * Symfony Message sender to send messages to AMQP brokers using PHP's AMQP extension.
