@@ -31,7 +31,7 @@ class MessagePass implements CompilerPassInterface
     private $messageHandlerResolverService;
     private $handlerTag;
 
-    public function __construct(string $messageBusService = 'message_bus', string $messageHandlerResolverService = 'message.handler_resolver', string $handlerTag = 'message_handler')
+    public function __construct(string $messageBusService = 'message_bus', string $messageHandlerResolverService = 'messenger.handler_resolver', string $handlerTag = 'message_handler')
     {
         $this->messageBusService = $messageBusService;
         $this->messageHandlerResolverService = $messageHandlerResolverService;
@@ -47,8 +47,8 @@ class MessagePass implements CompilerPassInterface
             return;
         }
 
-        if (!$container->getParameter('kernel.debug') || !$container->hasDefinition('logger')) {
-            $container->removeDefinition('message.middleware.debug.logging');
+        if (!$container->getParameter('kernel.debug') || !$container->has('logger')) {
+            $container->removeDefinition('messenger.middleware.debug.logging');
         }
 
         $this->registerReceivers($container);
@@ -95,7 +95,7 @@ class MessagePass implements CompilerPassInterface
 
         $handlersLocatorMapping = array();
         foreach ($handlersByMessage as $message => $handler) {
-            $handlersLocatorMapping['handles.'.$message] = $handler;
+            $handlersLocatorMapping['handler.'.$message] = $handler;
         }
 
         $handlerResolver = $container->getDefinition($this->messageHandlerResolverService);
@@ -128,12 +128,12 @@ class MessagePass implements CompilerPassInterface
     private function registerReceivers(ContainerBuilder $container)
     {
         $receiverMapping = array();
-        foreach ($container->findTaggedServiceIds('message.receiver') as $id => $tags) {
+        foreach ($container->findTaggedServiceIds('messenger.receiver') as $id => $tags) {
             foreach ($tags as $tag) {
                 $receiverMapping[$tag['id'] ?? $id] = new Reference($id);
             }
         }
 
-        $container->getDefinition('message.receiver_locator')->replaceArgument(0, $receiverMapping);
+        $container->getDefinition('messenger.receiver_locator')->replaceArgument(0, $receiverMapping);
     }
 }

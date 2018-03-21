@@ -102,7 +102,7 @@ class Configuration implements ConfigurationInterface
         $this->addPhpErrorsSection($rootNode);
         $this->addWebLinkSection($rootNode);
         $this->addLockSection($rootNode);
-        $this->addMessageSection($rootNode);
+        $this->addMessengerSection($rootNode);
 
         return $treeBuilder;
     }
@@ -906,12 +906,12 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addMessageSection(ArrayNodeDefinition $rootNode)
+    private function addMessengerSection(ArrayNodeDefinition $rootNode)
     {
         $rootNode
             ->children()
-                ->arrayNode('message')
-                    ->info('Message configuration')
+                ->arrayNode('messenger')
+                    ->info('Messenger configuration')
                     ->{!class_exists(FullStack::class) && class_exists(MessageBusInterface::class) ? 'canBeDisabled' : 'canBeEnabled'}()
                     ->children()
                         ->arrayNode('routing')

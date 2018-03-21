@@ -342,9 +342,9 @@ class FrameworkExtension extends Extension
         $container->registerForAutoconfiguration(ObjectInitializerInterface::class)
             ->addTag('validator.initializer');
         $container->registerForAutoconfiguration(ReceiverInterface::class)
-            ->addTag('message.receiver');
+            ->addTag('messenger.receiver');
         $container->registerForAutoconfiguration(SenderInterface::class)
-            ->addTag('message.sender');
+            ->addTag('messenger.sender');
 
         if (!$container->getParameter('kernel.debug')) {
             // remove tagged iterator argument for resource checkers

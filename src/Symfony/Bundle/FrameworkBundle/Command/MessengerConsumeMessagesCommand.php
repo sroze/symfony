@@ -25,9 +25,9 @@ use Symfony\Component\Messenger\Worker;
 /**
  * @author Samuel Roze <samuel.roze@gmail.com>
  */
-class MessageConsumeCommand extends Command
+class MessengerConsumeMessagesCommand extends Command
 {
-    protected static $defaultName = 'message:consume';
+    protected static $defaultName = 'messenger:consume-messages';
 
     private $bus;
     private $receiverLocator;

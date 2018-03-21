@@ -31,7 +31,7 @@
             <argument /> <!-- Message to sender ID mapping -->
         </service>
         <service id="messenger.asynchronous.middleware.send_message_to_producer" class="Symfony\Component\Messenger\Asynchronous\Middleware\SendMessageMiddleware">
-            <argument type="service" id="message.asynchronous.routing.sender_locator" />
+            <argument type="service" id="messenger.asynchronous.routing.sender_locator" />
 
             <tag name="message_middleware" priority="-5" />
         </service>
