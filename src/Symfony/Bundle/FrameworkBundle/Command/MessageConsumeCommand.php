@@ -17,10 +17,10 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Message\MessageBusInterface;
-use Symfony\Component\Message\Transport\Enhancers\MaximumCountReceiver;
-use Symfony\Component\Message\Transport\ReceiverInterface;
-use Symfony\Component\Message\Worker;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Transport\Enhancers\MaximumCountReceiver;
+use Symfony\Component\Messenger\Transport\ReceiverInterface;
+use Symfony\Component\Messenger\Worker;
 
 /**
  * @author Samuel Roze <samuel.roze@gmail.com>

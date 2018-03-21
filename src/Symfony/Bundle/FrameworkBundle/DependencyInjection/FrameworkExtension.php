@@ -59,8 +59,8 @@ use Symfony\Component\Lock\Lock;
 use Symfony\Component\Lock\LockInterface;
 use Symfony\Component\Lock\Store\StoreFactory;
 use Symfony\Component\Lock\StoreInterface;
-use Symfony\Component\Message\Transport\ReceiverInterface;
-use Symfony\Component\Message\Transport\SenderInterface;
+use Symfony\Component\Messenger\Transport\ReceiverInterface;
+use Symfony\Component\Messenger\Transport\SenderInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\PropertyInfo\PropertyAccessExtractorInterface;
 use Symfony\Component\PropertyInfo\PropertyDescriptionExtractorInterface;
@@ -268,10 +268,10 @@ class FrameworkExtension extends Extension
             $this->registerLockConfiguration($config['lock'], $container, $loader);
         }
 
-        if ($this->isConfigEnabled($container, $config['message'])) {
-            $this->registerMessageConfiguration($config['message'], $container, $loader);
+        if ($this->isConfigEnabled($container, $config['messenger'])) {
+            $this->registerMessengerConfiguration($config['messenger'], $container, $loader);
         } else {
-            $container->removeDefinition('console.command.message_consume');
+            $container->removeDefinition('console.command.messenger_consume');
         }
 
         if ($this->isConfigEnabled($container, $config['web_link'])) {
@@ -1386,9 +1386,9 @@ class FrameworkExtension extends Extension
         }
     }
 
-    private function registerMessageConfiguration(array $config, ContainerBuilder $container, XmlFileLoader $loader)
+    private function registerMessengerConfiguration(array $config, ContainerBuilder $container, XmlFileLoader $loader)
     {
-        $loader->load('message.xml');
+        $loader->load('messenger.xml');
 
         $senderLocatorMapping = array();
         $messageToSenderIdsMapping = array();
@@ -1402,8 +1402,8 @@ class FrameworkExtension extends Extension
             $messageToSenderIdsMapping[$message] = $messageConfiguration['senders'];
         }
 
-        $container->getDefinition('message.sender_locator')->replaceArgument(0, $senderLocatorMapping);
-        $container->getDefinition('message.asynchronous.routing.sender_locator')->replaceArgument(1, $messageToSenderIdsMapping);
+        $container->getDefinition('messenger.sender_locator')->replaceArgument(0, $senderLocatorMapping);
+        $container->getDefinition('messenger.asynchronous.routing.sender_locator')->replaceArgument(1, $messageToSenderIdsMapping);
     }
 
     private function registerCacheConfiguration(array $config, ContainerBuilder $container)
