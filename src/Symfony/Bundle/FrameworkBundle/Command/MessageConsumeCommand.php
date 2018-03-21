@@ -50,11 +50,15 @@ class MessageConsumeCommand extends Command
                 new InputArgument('receiver', InputArgument::REQUIRED, 'Name of the receiver'),
                 new InputOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Limit the number of received messages'),
             ))
-            ->setDescription('Consumes a message')
+            ->setDescription('Consumes messages')
             ->setHelp(<<<'EOF'
-The <info>%command.name%</info> command consumes a message and dispatches it to the message bus.
+The <info>%command.name%</info> command consumes messages and dispatches them to the message bus.
 
-    <info>php %command.full_name% <consumer-service-name></info>
+    <info>php %command.full_name% <receiver-name></info>
+
+Use the --limit option to limit the number of messages received:
+
+    <info>php %command.full_name% <receiver-name> --limit=10</info>
 EOF
             )
         ;

@@ -19,7 +19,7 @@ use Symfony\Component\Message\Transport\SenderInterface;
 interface SenderLocatorInterface
 {
     /**
-     * Get the producer (if applicable) for the given message object.
+     * Gets the producer (if applicable) for the given message object.
      *
      * @param object $message
      *

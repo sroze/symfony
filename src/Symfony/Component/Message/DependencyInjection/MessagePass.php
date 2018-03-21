@@ -93,8 +93,13 @@ class MessagePass implements CompilerPassInterface
         }
         $container->addDefinitions($definitions);
 
+        $handlersLocatorMapping = array();
+        foreach ($handlersByMessage as $message => $handler) {
+            $handlersLocatorMapping['handles.'.$message] = $handler;
+        }
+
         $handlerResolver = $container->getDefinition($this->messageHandlerResolverService);
-        $handlerResolver->replaceArgument(0, ServiceLocatorTagPass::register($container, $handlersByMessage));
+        $handlerResolver->replaceArgument(0, ServiceLocatorTagPass::register($container, $handlersLocatorMapping));
     }
 
     private function guessHandledClass(ContainerBuilder $container, string $serviceId): string

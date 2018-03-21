@@ -1,7 +1,7 @@
 Message Component
 =================
 
-The Message component helps application to send and receive messages to/from other applications or via
+The Message component helps application send and receive messages to/from other applications or via
 message queues.
 
 Resources

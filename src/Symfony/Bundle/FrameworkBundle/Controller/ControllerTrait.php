@@ -388,14 +388,12 @@ trait ControllerTrait
      *
      * @param object $message The message to dispatch
      *
-     * @return mixed The result from the bus
-     *
      * @final
      */
-    protected function dispatch($message)
+    protected function dispatchMessage($message)
     {
         if (!$this->container->has('message_bus')) {
-            throw new \LogicException('The message bus is not enabled in your application. Enable it with the "message" key in "config/packages/framework.yaml".');
+            throw new \LogicException('The message bus is not enabled in your application. Try running "composer require symfony/message".');
         }
 
         return $this->container->get('message_bus')->dispatch($message);

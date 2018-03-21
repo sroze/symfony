@@ -40,7 +40,7 @@ class MaximumCountReceiver implements ReceiverInterface
                 $iterator->throw($e);
             }
 
-            if (++$receivedMessages > $this->maximumNumberOfMessages) {
+            if (++$receivedMessages >= $this->maximumNumberOfMessages) {
                 break;
             }
         }

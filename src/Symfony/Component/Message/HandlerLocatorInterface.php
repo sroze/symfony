@@ -19,7 +19,7 @@ use Symfony\Component\Message\Exception\NoHandlerForMessageException;
 interface HandlerLocatorInterface
 {
     /**
-     * Return the handler for the given message.
+     * Returns the handler for the given message.
      *
      * @param object $message
      *

@@ -17,8 +17,7 @@ namespace Symfony\Component\Message;
 interface MiddlewareInterface
 {
     /**
-     * @param object   $message
-     * @param callable $next
+     * @param object $message
      *
      * @return mixed
      */
