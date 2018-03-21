@@ -271,7 +271,7 @@ class FrameworkExtension extends Extension
         if ($this->isConfigEnabled($container, $config['messenger'])) {
             $this->registerMessengerConfiguration($config['messenger'], $container, $loader);
         } else {
-            $container->removeDefinition('console.command.messenger_consume');
+            $container->removeDefinition('console.command.messenger_consume_messages');
         }
 
         if ($this->isConfigEnabled($container, $config['web_link'])) {
