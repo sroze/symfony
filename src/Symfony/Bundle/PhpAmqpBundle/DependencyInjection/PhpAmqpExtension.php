@@ -35,15 +35,15 @@ class PhpAmqpExtension extends Extension
         ]))->setFactory([Connection::class, 'fromDsn']);
 
         $container->setDefinitions([
-            'message.amqp.connection' => $connectionDefinition,
-            'message.amqp.receiver' => (new Definition(AmqpReceiver::class, [
+            'messenger.amqp.connection' => $connectionDefinition,
+            'messenger.amqp.receiver' => (new Definition(AmqpReceiver::class, [
                 new Reference($config['decoder']),
-                new Reference('message.amqp.connection')
-            ]))->addTag('message.receiver'),
-            'message.amqp.sender' => (new Definition(AmqpSender::class, [
+                new Reference('messenger.amqp.connection')
+            ]))->addTag('messenger.receiver'),
+            'messenger.amqp.sender' => (new Definition(AmqpSender::class, [
                 new Reference($config['encoder']),
-                new Reference('message.amqp.connection')
-            ]))->addTag('message.sender')
+                new Reference('messenger.amqp.connection')
+            ]))->addTag('messenger.sender')
         ]);
     }
 }

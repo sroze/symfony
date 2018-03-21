@@ -36,10 +36,10 @@ class Configuration implements ConfigurationInterface
                     ->isRequired()
                 ->end()
                 ->scalarNode('decoder')
-                    ->defaultValue('message.transport.default_decoder')
+                    ->defaultValue('messenger.transport.default_decoder')
                 ->end()
                 ->scalarNode('encoder')
-                    ->defaultValue('message.transport.default_encoder')
+                    ->defaultValue('messenger.transport.default_encoder')
                 ->end()
             ->end()
         ;
