@@ -38,6 +38,10 @@ class SendMessageMiddleware implements MiddlewareInterface
 
         if (!empty($senders = $this->senderLocator->getSendersForMessage($message))) {
             foreach ($senders as $sender) {
+                if (null === $sender) {
+                    continue;
+                }
+
                 $sender->send($message);
             }
 
