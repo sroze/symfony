@@ -31,7 +31,7 @@ class LoggingMiddleware implements MiddlewareInterface
      */
     public function handle($message, callable $next)
     {
-        $this->logger->debug('Starting processing message {class}', array(
+        $this->logger->debug('Starting handling message {class}', array(
             'message' => $message,
             'class' => get_class($message),
         ));
@@ -39,7 +39,7 @@ class LoggingMiddleware implements MiddlewareInterface
         try {
             $result = $next($message);
         } catch (\Throwable $e) {
-            $this->logger->warning('An exception occurred while processing message {class}', array(
+            $this->logger->warning('An exception occurred while handling message {class}', array(
                 'message' => $message,
                 'exception' => $e,
                 'class' => get_class($message),
@@ -48,7 +48,7 @@ class LoggingMiddleware implements MiddlewareInterface
             throw $e;
         }
 
-        $this->logger->debug('Finished processing message {class}', array(
+        $this->logger->debug('Finished handling message {class}', array(
             'message' => $message,
             'class' => get_class($message),
         ));

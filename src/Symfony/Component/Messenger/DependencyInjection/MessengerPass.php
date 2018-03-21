@@ -23,7 +23,7 @@ use Symfony\Component\Messenger\Handler\ChainHandler;
 /**
  * @author Samuel Roze <samuel.roze@gmail.com>
  */
-class MessagePass implements CompilerPassInterface
+class MessengerPass implements CompilerPassInterface
 {
     use PriorityTaggedServiceTrait;
 
@@ -119,7 +119,7 @@ class MessagePass implements CompilerPassInterface
 
         $parameter = $parameters[0];
         if (null === $parameter->getClass()) {
-            throw new RuntimeException(sprintf('The parameter of `__invoke` function of service "%s" must type hint the Message class it handles.', $serviceId));
+            throw new RuntimeException(sprintf('The parameter of `__invoke` function of service "%s" must type hint the message class it handles.', $serviceId));
         }
 
         return $parameter->getClass()->getName();

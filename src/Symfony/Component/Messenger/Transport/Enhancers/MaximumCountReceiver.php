@@ -13,6 +13,9 @@ namespace Symfony\Component\Messenger\Transport\Enhancers;
 
 use Symfony\Component\Messenger\Transport\ReceiverInterface;
 
+/**
+ * @author Samuel Roze <samuel.roze@gmail.com>
+ */
 class MaximumCountReceiver implements ReceiverInterface
 {
     private $decoratedReceiver;

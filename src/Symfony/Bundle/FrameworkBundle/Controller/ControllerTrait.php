@@ -393,7 +393,7 @@ trait ControllerTrait
     protected function dispatchMessage($message)
     {
         if (!$this->container->has('message_bus')) {
-            throw new \LogicException('The message bus is not enabled in your application. Try running "composer require symfony/message".');
+            throw new \LogicException('The message bus is not enabled in your application. Try running "composer require symfony/messenger".');
         }
 
         return $this->container->get('message_bus')->dispatch($message);
