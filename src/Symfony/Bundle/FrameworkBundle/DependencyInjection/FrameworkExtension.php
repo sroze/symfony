@@ -1737,6 +1737,7 @@ class FrameworkExtension extends Extension
             }
         }
 
+        $container->setAlias('messenger.default_serializer', $config['serializer']['default_serializer']);
         if (empty($config['transports'])) {
             $container->removeDefinition('messenger.transport.symfony_serializer');
             $container->removeDefinition('messenger.transport.amqp.factory');
@@ -1745,7 +1746,6 @@ class FrameworkExtension extends Extension
             $container->getDefinition('messenger.transport.symfony_serializer')
                 ->replaceArgument(1, $config['serializer']['symfony_serializer']['format'])
                 ->replaceArgument(2, $config['serializer']['symfony_serializer']['context']);
-            $container->setAlias('messenger.default_serializer', $config['serializer']['default_serializer']);
         }
 
         $senderAliases = [];

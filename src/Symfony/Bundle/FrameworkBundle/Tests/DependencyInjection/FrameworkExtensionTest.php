@@ -672,6 +672,7 @@ abstract class FrameworkExtensionTest extends TestCase
         $this->assertFalse($container->hasDefinition('messenger.transport.redis.factory'));
         $this->assertTrue($container->hasDefinition('messenger.transport_factory'));
         $this->assertSame(TransportFactory::class, $container->getDefinition('messenger.transport_factory')->getClass());
+        $this->assertSame('messenger.transport.native_php_serializer', (string) $container->getAlias('messenger.default_serializer'));
     }
 
     public function testMessengerTransports()
